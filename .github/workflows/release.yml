@@ -38,7 +38,7 @@ jobs:
         run: npm run build
 
       - name: Build electron artifacts
-        run: npx electron-builder ${{ matrix.target }}
+        run: npx electron-builder ${{ matrix.target }} --publish never
 
       - name: Show what we built
         shell: bash
