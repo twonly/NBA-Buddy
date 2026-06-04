@@ -6,7 +6,7 @@ on:
       - 'v*'
 
 permissions:
-  contents: write   # so electron-builder can upload artifacts to the release
+  contents: write
 
 jobs:
   build:
@@ -37,7 +37,23 @@ jobs:
       - name: Build renderer + main
         run: npm run build
 
-      - name: Build & publish (electron-builder)
+      - name: Build electron artifacts
+        run: npx electron-builder ${{ matrix.target }}
+
+      - name: Show what we built
+        shell: bash
+        run: ls -la release/ || true
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            release/*.dmg
+            release/*.exe
+            release/*.yml
+            release/*.blockmap
+          fail_on_unmatched_files: false
+          draft: false
+          prerelease: false
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx electron-builder ${{ matrix.target }} --publish always
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
