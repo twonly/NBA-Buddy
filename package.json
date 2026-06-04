@@ -1,6 +1,6 @@
 {
   "name": "fanshrimp-nba",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "篮球虾仔 — desktop NBA companion for game day",
   "main": "dist-electron/main.js",
   "scripts": {
